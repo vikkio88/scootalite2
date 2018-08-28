@@ -1,18 +1,18 @@
+const {CACHE_TIME} = require('../../config');
 const {send} = require('micro');
-
-const {show} = require('../../models/shows');
+const cache = require('micro-cacheable');
+const {showService} = require('../../models/shows');
 
 const showsGet = async (req, res) => {
-    const {data} = await show.getAll();
-    return send(res, 200, data.payload);
+    const show = await showService.getAll();
+    return send(res, 200, show);
 };
 const showGetBySlug = async (req, res) => {
-    const {slug} = req.params;
-    const {data} = await show.getBySlug(slug);
-    return send(res, 200, data.payload);
+    const show = await showService.getBySlug(req.params.slug);
+    return send(res, 200, show);
 };
 
 module.exports = {
-    showsGet,
+    showsGet: cache(CACHE_TIME, showsGet),
     showGetBySlug
 };

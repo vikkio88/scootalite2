@@ -1,9 +1,9 @@
-const {service} = require('../');
-const show = {
-    getBySlug: slug => service.get(`/shows/${slug}`),
-    getAll: () => service.get(`/shows`),
+const {service, payloadExtract} = require('../');
+const showService = {
+    getBySlug: slug => service.get(`/shows/${slug}`).then(payloadExtract),
+    getAll: () => service.get(`/shows`).then(payloadExtract),
 };
 
 module.exports = {
-    show
+    showService
 };

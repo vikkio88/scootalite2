@@ -4,6 +4,9 @@ const service = axios.create({
     baseURL: API_URL
 });
 
+const payloadExtract = ({data}) => Promise.resolve(data.payload);
+
 module.exports = {
-    service
+    service,
+    payloadExtract
 };
