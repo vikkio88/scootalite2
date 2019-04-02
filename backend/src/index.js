@@ -1,16 +1,22 @@
-const {send} = require('micro');
+const cors = require('micro-cors')();
+const { send } = require('micro');
+const { router, get, post } = require('microrouter');
 
-const {router, get} = require('microrouter');
+const { users } = require('./actions')
+const { authguard, getUser } = require('./middlewares');
 
-const {pingGet} = require('./actions/ping');
 
-const {showsGet, showGetBySlug} = require('./actions/shows');
+module.exports = cors(router(
+    get('/ping', () => ({ pong: true })),
 
-const notfound = (req, res) => send(res, 404, 'Not found route');
+    post('/login', users.login),
 
-module.exports = router(
-    get('/ping', pingGet),
-    get('/shows', showsGet),
-    get('/shows/:slug', showGetBySlug),
-    get('/*', notfound)
-);
+    get('/ciao', getUser(users.stuff)),
+
+    get('/user', authguard(users.stuff)),
+
+
+
+    get('/*', (req, res) => send(res, 404)),
+    post('/*', (req, res) => send(res, 404)),
+));

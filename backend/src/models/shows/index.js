@@ -1,7 +1,8 @@
 const {service, payloadExtract} = require('../');
 const showService = {
-    getBySlug: slug => service.get(`/shows/${slug}`).then(payloadExtract),
-    getAll: () => service.get(`/shows`).then(payloadExtract),
+    getByFeedUrl: feedUrl =>{},
+    getBySlug: slug => {},
+    filter: (filters, page = 1, limit = 10) => {},
 };
 
 module.exports = {
