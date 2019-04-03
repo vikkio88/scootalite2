@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "main": "src/index.js",
   "scripts": {
-    "dev": "micro-dev src/",
-    "start": "micro src/"
+    "dev": "micro-dev",
+    "start": "micro"
   },
   "env": {
     "NODE_ENV": "production"

@@ -2,7 +2,7 @@ const cors = require('micro-cors')();
 const { send } = require('micro');
 const { router, get, post } = require('microrouter');
 
-const { users } = require('./actions')
+const { users, feeds } = require('./actions')
 const { authguard, getUser } = require('./middlewares');
 
 
@@ -10,6 +10,8 @@ module.exports = cors(router(
     get('/ping', () => ({ pong: true })),
 
     post('/login', users.login),
+    
+    post('/feeds/parse', feeds.parse),
 
     get('/ciao', getUser(users.stuff)),
 

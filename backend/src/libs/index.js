@@ -1,14 +1,17 @@
 const Show = require('./valueObjects').Show;
 const feedParser = require('./feedParser').feedParser;
-(async () => {
+const parser = async url => {
     try {
-        const showPayload = await feedParser(process.argv[2]);
+        console.log(url);
+        const showPayload = await feedParser(url);
         const show = Show.fromFeed(showPayload);
-        if(!process.argv[3]){
-            show.podcasts = null;
-        }
-        console.log(show.toJs());
+        return show.toJs();
     } catch (error) {
-        console.error("Error", error, process.argv);
+        console.error("Error", error);
+        throw 'Wrong Url';
     }
-})();
+}
+
+module.exports = {
+    parser
+};
