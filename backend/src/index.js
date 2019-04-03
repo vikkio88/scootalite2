@@ -2,12 +2,12 @@ const cors = require('micro-cors')();
 const { send } = require('micro');
 const { router, get, post } = require('microrouter');
 
-const { users, feeds } = require('./actions')
+const { users, feeds, misc } = require('./actions')
 const { authguard, getUser } = require('./middlewares');
 
 
 module.exports = cors(router(
-    get('/ping', () => ({ pong: true })),
+    get('/ping', misc.pong),
 
     post('/login', users.login),
     
@@ -16,8 +16,9 @@ module.exports = cors(router(
     get('/ciao', getUser(users.stuff)),
 
     get('/user', authguard(users.stuff)),
-
-
+    
+    
+    get('/', misc.fallback),
 
     get('/*', (req, res) => send(res, 404)),
     post('/*', (req, res) => send(res, 404)),

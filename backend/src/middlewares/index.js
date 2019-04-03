@@ -1,6 +1,7 @@
 const { send } = require('micro');
 const dayjs = require('dayjs');
 const { auth } = require('../libs/auth');
+const { unauthorized } = require('../libs/formatters');
 
 const extractUser = req => {
     if (!req.headers.authorization) {
@@ -24,7 +25,7 @@ const extractUser = req => {
 const authguard = fn => (req, res) => {
     const user = extractUser(req);
     if (!user) {
-        return send(res, 401);
+        return unauthorized(res);
     }
 
     req.user = user;
