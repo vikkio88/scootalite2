@@ -1,0 +1,5 @@
+{
+    "env": {
+        "LABEL": "@production-label"
+    }
+}

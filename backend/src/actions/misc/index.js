@@ -1,7 +1,7 @@
 const { response } = require('../../libs/formatters');
 
 const pong = (req, res) => {
-    return response(res, { pong: true });
+    return response(res, { pong: true, env: process.env.LABEL });
 };
 
 const fallback = (req, res) => {
