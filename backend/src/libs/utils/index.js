@@ -10,8 +10,16 @@ const slugger = (title, salter = true) => {
 const stringCleaner = {
     rmHtml(string) {
         return string.replace(/<(?:.|\n)*?>/gm, '').replace(/&\w+;/gm, ' ');
+    },
+    booleanize(string, fallback = false) {
+        if (!string) {
+            return fallback;
+        }
+
+        return string.toLowerCase() === 'yes' ? true : false;
     }
 }
+
 
 module.exports = {
     slugger,

@@ -7,7 +7,7 @@ const pong = (req, res) => {
 const fallback = (req, res) => {
     return '<head><meta charset="UTF-8"></head><body style="display:flex;' +
         'flex-direction:column; align-items: center; justify-content: center;">' +
-        '(╥﹏╥)<span style="margin-top:30px">Nope</span></body>';
+        '(╥﹏╥)<span style="margin-top:30px">Nope!</span></body>';
 };
 
 module.exports = {

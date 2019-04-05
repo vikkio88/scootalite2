@@ -1,3 +1,4 @@
+require('dotenv').config();
 const cors = require('micro-cors')();
 const { send } = require('micro');
 const { router, get, post } = require('microrouter');

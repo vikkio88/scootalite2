@@ -1,6 +1,4 @@
-const utils = require('../utils');
-const stringCleaner = utils.stringCleaner;
-const slugger = utils.slugger;
+const { stringCleaner, slugger } = require('../utils');
 
 class Show {
     constructor(title, slug, description, link, feedUrl, copyright, image, author, email, language, explicit, podcasts) {
@@ -27,7 +25,7 @@ class Show {
         const image = itunes.image;
         const author = itunes.author || itunes.owner.name;
         const email = itunes.owner.email;
-        const explicit = itunes.explicit;
+        const explicit = stringCleaner.booleanize(itunes.explicit);
 
         let podcasts = items;
 
@@ -45,7 +43,7 @@ class Show {
             const last = this.podcasts[0];
             const persistedLast = persistedShow.podcasts.length > 0 ? persistedShow.podcasts[0] : null;
 
-            if(!persistedLast){
+            if (!persistedLast) {
                 return true;
             }
 
@@ -67,7 +65,7 @@ class Show {
             image: this.image,
             author: this.author,
             email: this.email,
-            laguage: this.language,
+            language: this.language,
             explicit: this.explicit,
             podcasts: this.podcasts
         }
