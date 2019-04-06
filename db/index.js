@@ -66,14 +66,21 @@ const podcasts = knex.schema.createTable('podcasts', function (table) {
 
 
 
+const dropPodcast = knex.schema.dropTableIfExists('podcasts');
+const dropShow = knex.schema.dropTableIfExists('shows');
 
+(async () => {
+    try {
+        await dropPodcast;
+        await dropShow;
+        console.log('tables dropped');
 
-[shows, podcasts].forEach((m, index) => {
-    m.then(res => {
-        console.log(`success migration ${index}`, res);
-    }).catch(error => {
-        console.error(`error on migration ${index}`, error);
-    }).finally(() => {
-        knex.destroy()
-    })
-})
+        await shows;
+        await podcasts;
+        console.log('tables created');
+    } catch (error) {
+        console.error('error', error);
+    }
+
+    knex.destroy();
+})();

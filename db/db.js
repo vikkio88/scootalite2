@@ -14,6 +14,9 @@ const db = (driver = knex({
         async create(table, row, returning = 'id') {
             return await driver(table).insert(row, returning);
         },
+        async createMany(table, rows, returning = 'id') {
+            return await driver.batchInsert(table, rows).returning(returning);
+        },
         async deleteOne(table, id) {
             return this.delete(table, { field: 'id', value: id });
         },
