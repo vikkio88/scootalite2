@@ -8,8 +8,28 @@ const db = (driver = knex({
 })) => {
     return {
         driver,
+        select({ table, fields = '*' }) {
+            return driver.select(fields).from(table);
+        },
+        async create(table, row, returning = 'id') {
+            return await driver(table).insert(row, returning);
+        },
+        async deleteOne(table, id) {
+            return this.delete(table, { field: 'id', value: id });
+        },
+        async delete(table, condition = { field: 1, value: 1 }) {
+            return await driver(table).where(condition.field, condition.value).delete();
+        },
+        async find(table, id) {
+            const rowSet = await this.select({ table }).where('id', id);
+            if (rowSet.length) {
+                return rowSet[0];
+            }
+
+            return null;
+        },
         async getFiltered({ table, fields = '*', filters = null, orderBy = { field: 'id', asc: true }, offset = 0, limit = 30 }) {
-            const query = driver.select(fields).from(table);
+            const query = this.select({ table, fields });
             if (filters) {
                 filters.forEach(field => query.where(field, filters[field]));
             }
@@ -17,7 +37,7 @@ const db = (driver = knex({
             if (orderBy) {
                 query.orderBy(orderBy.field, orderBy.asc ? 'asc' : 'desc');
             }
-            
+
             return await query.limit(limit).offset(offset);
         },
         destroy() {
