@@ -1,4 +1,4 @@
-const knex = require('./db')();
+const knex = require('./db')().driver;
 
 // insert
 const show = {
@@ -14,16 +14,6 @@ const show = {
     "language": "it-it",
     "explicit": false
 };
-
-const knex = require('knex')({
-    client: 'pg',
-    connection: {
-        host: '127.0.0.1',
-        user: 'postgres',
-        password: 'postgres',
-        database: 'ascootami'
-    }
-});
 
 knex('shows').insert(show, 'id').then(id => {
     console.log('success', id);
