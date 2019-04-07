@@ -1,23 +1,22 @@
 const { repoFactory } = require('./entityManager');
 const dbInstance = require('./db')();
 
-const entityManager = repoFactory(dbInstance);
-const showsRepo = entityManager.create('shows');
-const podcastsRepo = entityManager.create('podcasts');
-
-const shows = (repo = showsRepo, podcasts = podcastsRepo) => {
+const shows = db => {
+    const entityManager = repoFactory(db);
+    const repo = entityManager.create('shows');
+    const podcasts = entityManager.create('podcasts');
     return {
         async getOne(id) {
-            const show = repo.find(id);
+            const show = await repo.find(id);
 
             if (!show) {
                 return null;
             }
-            show.podcasts = podcasts.get({ filters: { showId: id } });
+            show.podcasts = await podcasts.get({ filters: { showId: id } });
             return show;
         }
     }
-}
+};
 
 (async () => {
     const entityManager = repoFactory(dbInstance);
@@ -29,10 +28,10 @@ const shows = (repo = showsRepo, podcasts = podcastsRepo) => {
         const update = await showsRepo.update(1, { updated_at: new Date() });
         console.log(update);
 
-        const found2 = await shows().getOne(1);
+        const found2 = await shows(dbInstance).getOne(1);
         console.log(found2);
     } catch (error) {
         console.error(error);
     }
-    entityManager.destroy();
+    dbInstance.destroy();
 })();

@@ -40,7 +40,7 @@ const db = (driver = knex({
         async getFiltered({ table, fields = '*', filters = null, orderBy = { field: 'id', asc: true }, offset = 0, limit = 30 }) {
             const query = this.select({ table, fields });
             if (filters) {
-                filters.forEach(field => query.where(field, filters[field]));
+                Object.keys(filters).forEach(field => query.where(field, filters[field]));
             }
 
             if (orderBy) {

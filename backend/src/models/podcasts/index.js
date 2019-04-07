@@ -1,23 +1,24 @@
 const { repoFactory } = require('../entityManager');
-const db = require('../../libs/db');
 
-const entityManager = repoFactory(db());
-const showsRepo = entityManager.create('shows');
-const podcastsRepo = entityManager.create('podcasts');
-
-const shows = (repo = showsRepo, podcasts = podcastsRepo) => {
+const shows = db => {
+    const entityManager = repoFactory(db);
+    const repo = entityManager.create('shows');
+    const podcasts = entityManager.create('podcasts');
     return {
         async getOne(id) {
-            const show = repo.find(id);
+            const show = await repo.find(id);
 
             if (!show) {
                 return null;
             }
-            const podcasts = podcastsRepo.get(filters({ showId: id }))
-            show.podcasts = podcasts
+            show.podcasts = await podcasts.get({ filters: { showId: id } });
             return show;
-
         }
     }
+};
+
+
+module.export = {
+    shows
 }
 
