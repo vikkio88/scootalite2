@@ -5,7 +5,7 @@ const dbInstance = require('./db')();
         const found = await dbInstance.find('shows', 1);
         console.log(found);
 
-        const update = await dbInstance.updateOne('shows', 1, { created_at: new Date(), updated_at: new Date()});
+        const update = await dbInstance.updateOne('shows', 1, {updated_at: new Date()});
         console.log(update);
 
         const found2 = await dbInstance.find('shows', 1);
