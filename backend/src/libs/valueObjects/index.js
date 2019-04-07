@@ -70,6 +70,35 @@ class Show {
             podcasts: this.podcasts
         }
     }
+
+    static prepareFromJs(show) {
+        return {
+            title: show.title,
+            slug: show.slug,
+            description: show.description,
+            link: show.link,
+            feedUrl: show.feedUrl,
+            copyright: show.copyright,
+            image: show.image,
+            author: show.author,
+            email: show.email,
+            language: show.language,
+            explicit: show.explicit,
+        };
+    }
+
+    static prepareForInsert(show) {
+        const prepared = Show.prepareFromJs(show);
+        prepared.created_at = new Date();
+        prepared.updated_at = new Date();
+        return prepared;
+    }
+
+    static prepareForUpdate(show) {
+        const prepared = Show.prepareFromJs(show);
+        prepared.updated_at = new Date();
+        return prepared;
+    }
 }
 
 class Podcast {
@@ -106,6 +135,13 @@ class Podcast {
             guid: this.guid,
             isoDate: this.isoDate
         }
+    }
+
+    static prepareForUpsert(newPodcasts, showId) {
+        return newPodcasts.map(p => {
+            p.showId = showId;
+            return p;
+        })
     }
 }
 

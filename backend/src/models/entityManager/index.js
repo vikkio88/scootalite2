@@ -28,6 +28,10 @@ class Model {
     async create(row) {
         return await this.db.create(this.table, row);
     }
+    
+    async createMany(rows) {
+        return await this.db.createMany(this.table, rows);
+    }
 }
 
 const repoFactory = db => {

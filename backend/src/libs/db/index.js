@@ -57,6 +57,29 @@ const db = (driver = knex({
 
             return await query.limit(limit).offset(offset);
         },
+        async rawUpsert(table, row, columnsToRetain, conflictOn) {
+            // from https://stackoverflow.com/a/55019125/4023451
+            const insert = driver(table)
+                .insert(row)
+                .toString();
+
+            const rowsToUpdate = {};
+            for (key in row) {
+                if (!columnsToRetain.includes(key)) {
+                    rowsToUpdate[key] = row[key];
+                }
+            }
+            const update = driver(table)
+                .update(rowsToUpdate)
+                .toString();
+            const keepValues = columnsToRetain.map(c => `"${c}"=${table}."${c}"`).join(',');
+            const conflictColumns = conflictOn.map(c => `"${c.toString()}"`).join(',');
+            let insertOrUpdateQuery = `${insert} ON CONFLICT( ${conflictColumns}) DO ${update}`;
+            insertOrUpdateQuery = keepValues ? `${insertOrUpdateQuery}, ${keepValues}` : insertOrUpdateQuery;
+            insertOrUpdateQuery = insertOrUpdateQuery.replace(`update "${table}"`, 'update');
+            insertOrUpdateQuery = insertOrUpdateQuery.replace(`"${table}"`, table);
+            return await driver.raw(insertOrUpdateQuery);
+        },
         destroy() {
             driver.destroy();
         }

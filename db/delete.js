@@ -22,14 +22,22 @@ const shows = db => {
     const entityManager = repoFactory(dbInstance);
     const showsRepo = entityManager.create('shows');
     try {
+        /*
         const found = await showsRepo.find(1);
         console.log(found);
 
         const update = await showsRepo.update(1, { updated_at: new Date() });
         console.log(update);
 
+        */
         const found2 = await shows(dbInstance).getOne(1);
-        console.log(found2);
+        delete found2.podcasts;
+        //console.log(found2);
+
+        found2.title = "Banana";
+
+        const ups = await dbInstance.rawUpsert('shows', found2, ['slug'], ['slug']);
+        console.log('ups')
     } catch (error) {
         console.error(error);
     }
