@@ -8,6 +8,10 @@ class Model {
         return await this.db.find(this.table, id);
     }
 
+    async findBy(condition = { field: 1, value: 1 }) {
+        return await this.db.findBy(this.table, condition);
+    }
+
     async get({ fields = '*', filters = null, orderBy = { field: 'id', asc: true }, offset = 0, limit = 30 }) {
         const query = { table: this.table, fields, filters, orderBy, offset, limit };
         return await this.db.getFiltered(query);
@@ -23,6 +27,10 @@ class Model {
 
     async create(row) {
         return await this.db.create(this.table, row);
+    }
+    
+    async createMany(rows) {
+        return await this.db.createMany(this.table, rows);
     }
 }
 

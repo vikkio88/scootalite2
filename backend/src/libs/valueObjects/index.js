@@ -1,4 +1,7 @@
+const dayjs = require('dayjs');
 const { stringCleaner, slugger } = require('../utils');
+
+const TTL = 3600;
 
 class Show {
     constructor(title, slug, description, link, feedUrl, copyright, image, author, email, language, explicit, podcasts) {
@@ -38,20 +41,8 @@ class Show {
         return new Show(title, slug, description, link, feedUrl, copyright, image, author, email, language, explicit, podcasts);
     }
 
-    isUpdated(persistedShow) {
-        if (this.podcasts.length > 0) {
-            const last = this.podcasts[0];
-            const persistedLast = persistedShow.podcasts.length > 0 ? persistedShow.podcasts[0] : null;
-
-            if (!persistedLast) {
-                return true;
-            }
-
-
-            return new Date(last.isoDate) > new Date(persistedLast.isoDate);
-        }
-
-        return false;
+    static isUpdated(persistedShow) {
+        return dayjs(persistedShow.updated_at).unix() + TTL > dayjs().unix();
     }
 
     toJs() {
@@ -138,10 +129,10 @@ class Podcast {
     }
 
     static prepareForUpsert(newPodcasts, showId) {
-        return newPodcasts.map(p => {
-            p.showId = showId;
-            return p;
-        })
+        return newPodcasts.map(p => ({
+            ...p,
+            showId
+        }));
     }
 }
 

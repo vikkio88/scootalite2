@@ -12,7 +12,11 @@ const db = (driver = knex({
             return driver.select(fields).from(table);
         },
         async create(table, row, returning = 'id') {
-            return await driver(table).insert(row, returning);
+            const ids = await driver(table).insert(row, returning);
+            if (ids && ids.length) {
+                return ids[0];
+            }
+            throw 'db error: cannot create';
         },
         async createMany(table, rows, returning = 'id') {
             return await driver.batchInsert(table, rows).returning(returning);

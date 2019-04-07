@@ -1,4 +1,3 @@
-const { send } = require('micro');
 const dayjs = require('dayjs');
 const { auth } = require('../libs/auth');
 const { unauthorized } = require('../libs/formatters');

@@ -15,6 +15,9 @@ const shows = db => {
             show.podcasts = await podcastsRepo.get({ filters: { showId: show.id } });
             return show;
         },
+        async getOneByFeedUrl(feedUrl) {
+            return await repo.findBy({ field: 'feedUrl', value: feedUrl });
+        },
         async getOneById(id) {
             const show = await repo.find(id);
 
@@ -24,19 +27,11 @@ const shows = db => {
             show.podcasts = await podcastsRepo.get({ filters: { showId: id } });
             return show;
         },
-        async upsertFromFeed(show) {
+        async upsertFromFeed(show, existingShow) {
             let showId = null;
-            const existingShow = await repo.findBy({ field: 'feedUrl', value: show.feedUrl });
-
-            console.log('got here')
-
             if (existingShow) {
-                const existingPodcasts = await podcastsRepo.get({ filters: { showId: id }, limit: 1 });
-                const isUpdated = show.isUpdated({ podcasts: existingPodcasts })
-                if (isUpdated) {
-                    await this.update(existingShow.id, show);
-                    await podcasts(db, podcastsRepo).upsertFromFeed(show.podcasts, existingShow.id)
-                }
+                await this.update(existingShow.id, show);
+                await podcasts(db, podcastsRepo).upsertFromFeed(show.podcasts, existingShow.id)
                 showId = parseInt(existingShow.id);
             } else {
                 showId = await this.insert(show);
@@ -49,8 +44,7 @@ const shows = db => {
         },
         async insert(show) {
             const showId = await repo.create(Show.prepareForInsert(show));
-            console.log('showId', showId);
-            await podcastsRepo.createMany(Podcast.prepareForUpsert(show.podcasts, showId));
+            await podcastsRepo.createMany(Podcast.prepareForUpsert(show.podcasts, parseInt(showId)));
             return showId;
         },
         destroy() {
