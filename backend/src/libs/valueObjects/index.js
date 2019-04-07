@@ -42,7 +42,7 @@ class Show {
     }
 
     static isUpdated(persistedShow) {
-        return dayjs(persistedShow.updated_at).unix() + TTL > dayjs().unix();
+        return dayjs(persistedShow.updatedAt).unix() + TTL > dayjs().unix();
     }
 
     toJs() {
@@ -80,14 +80,14 @@ class Show {
 
     static prepareForInsert(show) {
         const prepared = Show.prepareFromJs(show);
-        prepared.created_at = new Date();
-        prepared.updated_at = new Date();
+        prepared.createdAt = new Date();
+        prepared.updatedAt = new Date();
         return prepared;
     }
 
     static prepareForUpdate(show) {
         const prepared = Show.prepareFromJs(show);
-        prepared.updated_at = new Date();
+        prepared.updatedAt = new Date();
         return prepared;
     }
 }

@@ -13,8 +13,8 @@
     "email": "tutticonvocati@radio24.it",
     "language": "it-it",
     "explicit": false,
-    "created_at": "2019-04-07T17:58:10.154Z",
-    "updated_at": "2019-04-07T18:05:37.758Z",
+    "createdAt": "2019-04-07T17:58:10.154Z",
+    "updatedAt": "2019-04-07T18:05:37.758Z",
     "podcasts": [
       {
         "id": 1,

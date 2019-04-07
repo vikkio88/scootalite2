@@ -26,7 +26,8 @@ const shows = knex.schema.createTable('shows', function (table) {
     table.string('email');
     table.string('language', 10);
     table.boolean('explicit').defaultTo(false);
-    table.timestamps();
+    table.timestamp('createdAt').defaultTo(knex.fn.now());
+    table.timestamp('updatedAt').defaultTo(knex.fn.now());
     table.index('slug');
     table.unique('slug')
     table.unique('feedUrl')
