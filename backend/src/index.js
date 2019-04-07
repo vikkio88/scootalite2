@@ -3,7 +3,7 @@ const cors = require('micro-cors')();
 const { send } = require('micro');
 const { router, get, post } = require('microrouter');
 
-const { users, feeds, misc } = require('./actions')
+const { users, feeds, podcasts, misc } = require('./actions')
 const { authguard, getUser } = require('./middlewares');
 
 
@@ -11,12 +11,15 @@ module.exports = cors(router(
     get('/ping', misc.pong),
 
     post('/login', users.login),
+    get('/user', authguard(users.stuff)),
+    get('/getuser', getUser(users.stuff)),
 
+    // Feeds
     post('/feeds/parse', feeds.parse),
 
-    get('/ciao', getUser(users.stuff)),
-
-    get('/user', authguard(users.stuff)),
+    // Podcasts
+    get('/shows/:id', podcasts.getOneShow),
+    
 
 
     get('/', misc.fallback),

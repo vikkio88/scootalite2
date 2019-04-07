@@ -1,5 +1,6 @@
 const Show = require('./valueObjects').Show;
 const feedParser = require('./feedParser').feedParser;
+const db = require('./db');
 const parser = async url => {
     try {
         const showPayload = await feedParser(url);
@@ -12,5 +13,6 @@ const parser = async url => {
 }
 
 module.exports = {
-    parser
+    parser,
+    db
 };

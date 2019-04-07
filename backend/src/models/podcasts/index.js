@@ -13,12 +13,15 @@ const shows = db => {
             }
             show.podcasts = await podcasts.get({ filters: { showId: id } });
             return show;
+        },
+        destroy() {
+            db.destroy();
         }
     }
 };
 
 
-module.export = {
+module.exports = {
     shows
 }
 
