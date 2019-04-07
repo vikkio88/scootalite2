@@ -47,12 +47,12 @@ const shows = knex.schema.createTable('shows', function (table) {
 
 const podcasts = knex.schema.createTable('podcasts', function (table) {
     table.increments();
-    table.string('title').notNullable();
+    table.text('title').notNullable();
     table.string('slug').notNullable();
     table.string('pubDate');
     table.string('fileUrl').notNullable();
-    table.string('content');
-    table.string('contentSnippet');
+    table.text('content');
+    table.text('contentSnippet');
     table.string('guid').notNullable();
     table.date('isoDate');
 
