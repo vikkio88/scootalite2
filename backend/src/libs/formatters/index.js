@@ -13,6 +13,12 @@ const unauthorized = (res, message = 'Unauthorized') => {
     });
 }
 
+const notFound = (res, message = 'NotFound') => {
+    return send(res, 404, {
+        message
+    });
+}
+
 const unprocessable = (res, message = 'Wrong Payload', errors = []) => {
     return send(res, 422, {
         message,
@@ -23,5 +29,6 @@ const unprocessable = (res, message = 'Wrong Payload', errors = []) => {
 module.exports = {
     response,
     unauthorized,
+    notFound,
     unprocessable
 }

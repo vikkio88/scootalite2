@@ -18,7 +18,7 @@ module.exports = cors(router(
     post('/feeds/parse', feeds.parse),
 
     // Podcasts
-    get('/shows/:id', podcasts.getOneShow),
+    get('/shows/:slug', podcasts.getOneShow),
     
 
 

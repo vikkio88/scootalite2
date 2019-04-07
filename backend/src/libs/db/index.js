@@ -37,6 +37,14 @@ const db = (driver = knex({
 
             return null;
         },
+        async findBy(table, condition) {
+            const rowSet = await this.select({ table }).where(condition.field, condition.value);
+            if (rowSet.length) {
+                return rowSet[0];
+            }
+
+            return null;
+        },
         async getFiltered({ table, fields = '*', filters = null, orderBy = { field: 'id', asc: true }, offset = 0, limit = 30 }) {
             const query = this.select({ table, fields });
             if (filters) {
