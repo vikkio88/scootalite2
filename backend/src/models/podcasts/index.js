@@ -60,12 +60,13 @@ const podcasts = (db, repo = null) => {
 
     return {
         async upsertFromFeed(newPodcasts, showId) {
-            Podcast.prepareForUpsert(newPodcasts, showId);
+            newPodcasts = Podcast.prepareForUpsert(newPodcasts, showId);
             const podcasts = [];
-            await newPodcasts.forEach(async p => {
-                const savedP = await repo.db.rawUpsert('podcasts', p, ['slug', 'guid'], ['guid']);
+            for (index in newPodcasts) {
+                const savedP = await repo.db.rawUpsert('podcasts', newPodcasts[index], ['slug'], ['guid', 'showId']);
                 podcasts.push(savedP);
-            })
+            }
+
             return podcasts;
         }
     }
