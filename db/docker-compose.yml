@@ -1,14 +1,18 @@
-version: '2'
+version: '3.3'
 services:
   db:
-    image: postgres
+    image: mysql:5.6.43
+    restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=ascootami
+      MYSQL_DATABASE: 'scootami'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
     ports:
-      - 5432:5432
+      - '3306:3306'
+    expose:
+      - '3306'
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - dbdata:/var/lib/mysql
 volumes:
-  pgdata:
+  dbdata:
