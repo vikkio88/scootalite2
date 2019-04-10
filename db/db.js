@@ -1,9 +1,9 @@
 require('dotenv').config();
-const { DB_NAME, DB_HOST, DB_USER, DB_PASSWORD } = process.env;
+const { DB_NAME, DB_HOST, DB_USER, DB_PASSWORD, DB_DRIVER } = process.env;
 const knex = require('knex');
 
 const db = (driver = knex({
-    client: 'pg',
+    client: DB_DRIVER,
     connection: { host: DB_HOST, user: DB_USER, password: DB_PASSWORD, database: DB_NAME }
 })) => {
     return {

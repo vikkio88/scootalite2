@@ -16,7 +16,7 @@ const show = {
     "explicit": false
 };
 
-const podcasts = require('./test.json').payload;
+const podcasts = require('./test.json').payload.podcasts;
 const factory = repoFactory(db());
 const showRepo = factory.create('shows'); 
 const podRepo = factory.create('podcasts'); 
