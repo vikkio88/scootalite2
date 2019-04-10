@@ -63,7 +63,7 @@ const podcasts = (db, repo = null) => {
             newPodcasts = Podcast.prepareForUpsert(newPodcasts, showId);
             const podcasts = [];
             for (index in newPodcasts) {
-                const savedP = await repo.db.rawUpsert('podcasts', newPodcasts[index], ['slug'], ['guid', 'showId']);
+                const savedP = await repo.db.rawMySqlUpser('podcasts', newPodcasts[index], ['slug']);
                 podcasts.push(savedP);
             }
 

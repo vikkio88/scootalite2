@@ -1,4 +1,4 @@
-require('dotenv').config();
+const sqlString = require('sqlstring');
 const { DB_DRIVER, DB_NAME, DB_HOST, DB_USER, DB_PASSWORD } = process.env;
 const knex = require('knex');
 
@@ -61,7 +61,7 @@ const db = (driver = knex({
 
             return await query.limit(limit).offset(offset);
         },
-        async rawUpsert(table, row, columnsToRetain, conflictOn) {
+        async rawPgUpsert(table, row, columnsToRetain, conflictOn) {
             // from https://stackoverflow.com/a/55019125/4023451
             const insert = driver(table)
                 .insert(row)
@@ -83,6 +83,13 @@ const db = (driver = knex({
             insertOrUpdateQuery = insertOrUpdateQuery.replace(`update "${table}"`, 'update');
             insertOrUpdateQuery = insertOrUpdateQuery.replace(`"${table}"`, table);
             return await driver.raw(insertOrUpdateQuery);
+        },
+        async rawMySqlUpser(table, row, columnsToRetain = []) {
+            return driver.raw(driver(table).insert(row).toQuery()
+                + " ON DUPLICATE KEY UPDATE " +
+                Object.keys(row)
+                    .filter(f => !columnsToRetain.includes(f))
+                    .map(f => `${f}=${sqlString.escape(row[f])}`).join(", "));
         },
         destroy() {
             driver.destroy();

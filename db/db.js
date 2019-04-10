@@ -1,5 +1,6 @@
 require('dotenv').config();
-const { DB_NAME, DB_HOST, DB_USER, DB_PASSWORD, DB_DRIVER } = process.env;
+const sqlString = require('sqlstring');
+const { DB_DRIVER, DB_NAME, DB_HOST, DB_USER, DB_PASSWORD } = process.env;
 const knex = require('knex');
 
 const db = (driver = knex({
@@ -12,7 +13,11 @@ const db = (driver = knex({
             return driver.select(fields).from(table);
         },
         async create(table, row, returning = 'id') {
-            return await driver(table).insert(row, returning);
+            const ids = await driver(table).insert(row, returning);
+            if (ids && ids.length) {
+                return ids[0];
+            }
+            throw 'db error: cannot create';
         },
         async createMany(table, rows, returning = 'id') {
             return await driver.batchInsert(table, rows).returning(returning);
@@ -37,6 +42,14 @@ const db = (driver = knex({
 
             return null;
         },
+        async findBy(table, condition) {
+            const rowSet = await this.select({ table }).where(condition.field, condition.value);
+            if (rowSet.length) {
+                return rowSet[0];
+            }
+
+            return null;
+        },
         async getFiltered({ table, fields = '*', filters = null, orderBy = { field: 'id', asc: true }, offset = 0, limit = 30 }) {
             const query = this.select({ table, fields });
             if (filters) {
@@ -49,7 +62,7 @@ const db = (driver = knex({
 
             return await query.limit(limit).offset(offset);
         },
-        async rawUpsert(table, row, columnsToRetain, conflictOn) {
+        async rawPgUpsert(table, row, columnsToRetain, conflictOn) {
             // from https://stackoverflow.com/a/55019125/4023451
             const insert = driver(table)
                 .insert(row)
@@ -70,8 +83,14 @@ const db = (driver = knex({
             insertOrUpdateQuery = keepValues ? `${insertOrUpdateQuery}, ${keepValues}` : insertOrUpdateQuery;
             insertOrUpdateQuery = insertOrUpdateQuery.replace(`update "${table}"`, 'update');
             insertOrUpdateQuery = insertOrUpdateQuery.replace(`"${table}"`, table);
-            console.log(insertOrUpdateQuery);
             return await driver.raw(insertOrUpdateQuery);
+        },
+        async rawMySqlUpser(table, row, columnsToRetain = []) {
+            return driver.raw(driver(table).insert(row).toQuery()
+                + " ON DUPLICATE KEY UPDATE " +
+                Object.keys(row)
+                    .filter(f => !columnsToRetain.includes(f))
+                    .map(f => `${f}=${sqlString.escape(row[f])}`).join(", "));
         },
         destroy() {
             driver.destroy();
