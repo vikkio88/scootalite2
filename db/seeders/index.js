@@ -1,5 +1,5 @@
-const db = require('./db');
-const { repoFactory } = require('./entityManager');
+const db = require('../db');
+const { repoFactory } = require('../entityManager');
 
 // insert
 const show = {
@@ -18,17 +18,19 @@ const show = {
 
 const podcasts = require('./test.json').payload.podcasts;
 const factory = repoFactory(db());
-const showRepo = factory.create('shows'); 
-const podRepo = factory.create('podcasts'); 
-(async () => {
-    const showId = await showRepo.create(show);
-    console.log(`created show with id ${showId}`);
-    const podcastIds = await podRepo.createMany(podcasts.map(p => {
-        p.showId = parseInt(showId);
-        return p;
-    }));
-    console.log('added podcasts', podcastIds);
+const showRepo = factory.create('shows');
+const podRepo = factory.create('podcasts');
+module.exports = {
+    seeder: async () => {
+        const showId = await showRepo.create(show);
+        console.log(`created show with id ${showId}`);
+        const podcastIds = await podRepo.createMany(podcasts.map(p => {
+            p.showId = parseInt(showId);
+            return p;
+        }));
+        console.log('added podcasts', podcastIds);
 
-    factory.destroy();
+        factory.destroy();
 
-})();
+    }
+};

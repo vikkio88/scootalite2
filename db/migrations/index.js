@@ -1,4 +1,4 @@
-const knex = require('./db')().driver;
+const knex = require('../db')().driver;
 
 /*
     "title": "Tutti Convocati",
@@ -70,18 +70,20 @@ const podcasts = knex.schema.createTable('podcasts', function (table) {
 const dropPodcast = knex.schema.dropTableIfExists('podcasts');
 const dropShow = knex.schema.dropTableIfExists('shows');
 
-(async () => {
-    try {
-        await dropPodcast;
-        await dropShow;
-        console.log('tables dropped');
+module.exports = {
+    migrations: async () => {
+        try {
+            await dropPodcast;
+            await dropShow;
+            console.log('tables dropped');
 
-        await shows;
-        await podcasts;
-        console.log('tables created');
-    } catch (error) {
-        console.error('error', error);
+            await shows;
+            await podcasts;
+            console.log('tables created');
+        } catch (error) {
+            console.error('error', error);
+        }
+
+        knex.destroy();
     }
-
-    knex.destroy();
-})();
+}
