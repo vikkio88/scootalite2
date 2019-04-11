@@ -1,3 +1,6 @@
+const qs = require('querystring');
+const url = require('url');
+
 const slugger = (title, salter = true) => {
     let salt = '';
     if (salter) {
@@ -20,8 +23,20 @@ const stringCleaner = {
     }
 }
 
+const getQueryParams = (req, only = null) => {
+    const parsedUrl = url.parse(req.url);
+    const params = parsedUrl.search ? qs.parse(parsedUrl.search.substr(1)) : {};
+
+    if (!only) { // this as a placeholder to filter params
+        return params;
+    }
+
+    return params;
+};
+
 
 module.exports = {
     slugger,
-    stringCleaner
+    stringCleaner,
+    getQueryParams
 }

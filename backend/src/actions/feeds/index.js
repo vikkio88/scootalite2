@@ -2,13 +2,13 @@ const { json } = require('micro');
 const { Show } = require('../../libs/valueObjects');
 const { parser } = require('../../libs');
 const { db } = require('../../libs');
-const { shows } = require('../../models/podcasts');
+const { showsModel } = require('../../models/podcasts');
 const { response, unprocessable } = require('../../libs/formatters');
 
 const parse = async (req, res) => {
     const body = await json(req);
     try {
-        const showRepo = shows(db());
+        const showRepo = showsModel(db());
         const existingShow = await showRepo.getOneByFeedUrl(body.feed);
         if (existingShow && Show.isUpdated(existingShow)) {
             const show = await showRepo.getOneById(existingShow.id);

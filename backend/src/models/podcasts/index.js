@@ -6,6 +6,9 @@ const shows = db => {
     const repo = entityManager.create('shows');
     const podcastsRepo = entityManager.create('podcasts');
     return {
+        async getAll({filters = null, orderBy = { field: 'id', asc: true }, offset = 0, limit = 30}) {
+            return await repo.get({ filters, orderBy, offset, limit });
+        },
         async getOneBySlug(slug) {
             const show = await repo.findBy({ field: 'slug', value: slug });
 
@@ -74,6 +77,6 @@ const podcasts = (db, repo = null) => {
 
 
 module.exports = {
-    shows
+    showsModel: shows
 }
 
