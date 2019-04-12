@@ -1,5 +1,5 @@
-const db = require('../db');
-const { repoFactory } = require('../entityManager');
+const db = require('../../backend/src/libs/db/');
+const { repoFactory } = require('../../backend/src/models/entityManager');
 
 // insert
 const show = {

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const commandLineArgs = require('command-line-args')
 const optionDefinitions = [
     { name: 'migrate', alias: 'm', type: Boolean },

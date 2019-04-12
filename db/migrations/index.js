@@ -1,4 +1,4 @@
-const knex = require('../db')().driver;
+const driver = require('../../backend/src/libs/db/')().driver;
 
 /*
     "title": "Tutti Convocati",
@@ -13,7 +13,7 @@ const knex = require('../db')().driver;
     "laguage": "it-it",
     "explicit": false
 */
-const shows = knex.schema.createTable('shows', function (table) {
+const shows = driver.schema.createTable('shows', function (table) {
     table.increments();
     table.string('title').notNullable();
     table.string('slug').notNullable();
@@ -26,8 +26,8 @@ const shows = knex.schema.createTable('shows', function (table) {
     table.string('email');
     table.string('language', 10);
     table.boolean('explicit').defaultTo(false);
-    table.timestamp('createdAt').defaultTo(knex.fn.now());
-    table.timestamp('updatedAt').defaultTo(knex.fn.now());
+    table.timestamp('createdAt').defaultTo(driver.fn.now());
+    table.timestamp('updatedAt').defaultTo(driver.fn.now());
     table.index('slug');
     table.unique('slug')
     table.unique('feedUrl')
@@ -45,7 +45,7 @@ const shows = knex.schema.createTable('shows', function (table) {
     "isoDate": "2019-04-04T13:02:41.000Z"
  */
 
-const podcasts = knex.schema.createTable('podcasts', function (table) {
+const podcasts = driver.schema.createTable('podcasts', function (table) {
     table.increments();
     table.text('title').notNullable();
     table.string('slug').notNullable();
@@ -67,8 +67,8 @@ const podcasts = knex.schema.createTable('podcasts', function (table) {
 
 
 
-const dropPodcast = knex.schema.dropTableIfExists('podcasts');
-const dropShow = knex.schema.dropTableIfExists('shows');
+const dropPodcast = driver.schema.dropTableIfExists('podcasts');
+const dropShow = driver.schema.dropTableIfExists('shows');
 
 module.exports = {
     migrations: async () => {
@@ -84,6 +84,6 @@ module.exports = {
             console.error('error', error);
         }
 
-        knex.destroy();
+        driver.destroy();
     }
 }
