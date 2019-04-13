@@ -66,12 +66,7 @@ const stringCleaner = {
 const getQueryParams = (req, only = null) => {
     const parsedUrl = url.parse(req.url);
     const params = parsedUrl.search ? qs.parse(parsedUrl.search.substr(1), { decoder: queryDecoder }) : {};
-
-    if (only) { // this as a placeholder to filter params
-        return filterObjectKeys(params, only);
-    }
-
-    return params;
+    return !only ? params : filterObjectKeys(params, only);
 };
 
 
