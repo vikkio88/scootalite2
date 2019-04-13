@@ -11,3 +11,13 @@ test('getQueryParams returns right expected payload', t => {
         { banana: 'ciao', stuff: 1 }
     );
 });
+
+test('getQueryParams returns only filtered params', t => {
+    t.deepEqual(
+        getQueryParams(
+            fakeReq('stuff.com/?banana=ciao&stuff=1&ohyeah=1'),
+            ['banana', 'stuff']
+        ),
+        { banana: 'ciao', stuff: 1 }
+    );
+});

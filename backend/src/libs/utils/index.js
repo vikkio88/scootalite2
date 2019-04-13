@@ -29,6 +29,16 @@ const queryDecoder = (str, decoder, charset) => {
     } catch (e) {
         return strWithoutPlus;
     }
+};
+const filterObjectKeys = (object, allowed = []) => {
+    return Object.keys(object)
+        .filter(key => allowed.includes(key))
+        .reduce((obj, key) => {
+            obj[key] = object[key];
+            return obj;
+        },
+            {}
+        );
 }
 
 const slugger = (title, salter = true) => {
@@ -57,8 +67,8 @@ const getQueryParams = (req, only = null) => {
     const parsedUrl = url.parse(req.url);
     const params = parsedUrl.search ? qs.parse(parsedUrl.search.substr(1), { decoder: queryDecoder }) : {};
 
-    if (!only) { // this as a placeholder to filter params
-        return params;
+    if (only) { // this as a placeholder to filter params
+        return filterObjectKeys(params, only);
     }
 
     return params;
