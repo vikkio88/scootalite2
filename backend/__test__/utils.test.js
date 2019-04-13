@@ -6,5 +6,8 @@ const fakeReq = string => ({
 });
 
 test('getQueryParams returns right expected payload', t => {
-    t.is(getQueryParams(fakeReq('stuff.com/?banana=ciao')), { banana: 'ciao' });
+    t.deepEqual(
+        getQueryParams(fakeReq('stuff.com/?banana=ciao&stuff=1')),
+        { banana: 'ciao', stuff: 1 }
+    );
 });
