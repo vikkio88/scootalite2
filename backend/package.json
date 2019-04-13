@@ -4,7 +4,8 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "micro-dev",
-    "start": "micro"
+    "start": "micro",
+    "test": "ava"
   },
   "env": {
     "NODE_ENV": "production"
@@ -23,6 +24,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "ava": "^1.4.1",
     "micro-dev": "latest"
   }
 }
