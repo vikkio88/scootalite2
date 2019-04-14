@@ -25,7 +25,7 @@ const getOneShow = async (req, res) => {
 
 const getShows = async (req, res) => {
     const showRepo = showsModel(db());
-    const params = getQueryParams(req, ['title', 'explicit', 'limit', 'offset']);
+    const params = getQueryParams(req, ['limit', 'offset']);
     let shows = [];
     try {
         shows = await showRepo.getAll({...params});
