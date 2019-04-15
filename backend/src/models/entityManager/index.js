@@ -4,6 +4,10 @@ class Model {
         this.table = table;
     }
 
+    select() {
+        return this.db.select({ table: this.table });
+    }
+
     async find(id) {
         return await this.db.find(this.table, id);
     }
@@ -28,7 +32,7 @@ class Model {
     async create(row) {
         return await this.db.create(this.table, row);
     }
-    
+
     async createMany(rows) {
         return await this.db.createMany(this.table, rows);
     }

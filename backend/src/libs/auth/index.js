@@ -1,11 +1,17 @@
 const jwt = require('jwt-simple');
 const dayjs = require('dayjs');
+const { db } = require('../../libs');
+const { userModel } = require('../../models/users');
 
 const SECRET = 'ciao';
 const TTL = 3600;
 const auth = {
-    check({ username, password }) {
-        return !(username == 'admin' && password == 'password');
+    async check({ username, password }) {
+        const userRepo = userModel(db());
+        const result = await userRepo.check(username, password);
+        userRepo.destroy();
+
+        return result;
     },
     encode(user) {
         return jwt.encode({ user, expires: dayjs().unix() + TTL }, SECRET);

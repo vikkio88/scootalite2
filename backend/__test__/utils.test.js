@@ -1,5 +1,5 @@
 import test from 'ava';
-import { getQueryParams } from '../src/libs/utils'
+import { getQueryParams, encrypt, compareCrypt } from '../src/libs/utils'
 
 const fakeReq = string => ({
     url: string
@@ -21,3 +21,11 @@ test('getQueryParams returns only filtered params', t => {
         { banana: 'ciao', stuff: 1 }
     );
 });
+
+test('encrypted value will match the hash', async t => {
+    const password = 'somePassword';
+    const encrypted = await encrypt(password);
+
+    t.true(await compareCrypt(password,encrypted));
+});
+

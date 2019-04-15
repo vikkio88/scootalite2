@@ -1,4 +1,5 @@
 const db = require('../../backend/src/libs/db/');
+const { encrypt } = require('../../backend/src/libs/utils');
 const { repoFactory } = require('../../backend/src/models/entityManager');
 
 // insert
@@ -20,6 +21,8 @@ const podcasts = require('./test.json').payload.podcasts;
 const factory = repoFactory(db());
 const showRepo = factory.create('shows');
 const podRepo = factory.create('podcasts');
+const userRepo = factory.create('users');
+
 module.exports = {
     seeder: async () => {
         const showId = await showRepo.create(show);
@@ -29,6 +32,14 @@ module.exports = {
             return p;
         }));
         console.log('added podcasts', podcastIds);
+
+        const password = await encrypt('password');
+        const users = await userRepo.createMany([
+            { username: 'mario', email: 'mario@mario.it', password },
+            { username: 'luigi', email: 'luigi@mario.it', password },
+            { username: 'peach', email: 'peach@mario.it', password },
+        ]);
+        console.log('added test users', users);
 
         factory.destroy();
 

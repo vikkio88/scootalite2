@@ -1,5 +1,5 @@
 const dayjs = require('dayjs');
-const { stringCleaner, slugger } = require('../utils');
+const { stringCleaner, slugger, encrypt, compareCrypt } = require('../utils');
 
 const TTL = 3600;
 
@@ -134,6 +134,33 @@ class Podcast {
             showId
         }));
     }
+}
+
+class User {
+
+    static prepareFromJs(user) {
+        const { username, password, email } = user;
+        return {
+            username,
+            password: encrypt(password),
+            email
+        };
+    }
+
+    static prepareForInsert(user) {
+        const prepared = User.prepareFromJs(user);
+        prepared.createdAt = new Date();
+        prepared.updatedAt = new Date();
+        return prepared;
+
+    }
+
+    static prepareForUpdate(user) {
+        const prepared = User.prepareFromJs(user);
+        prepared.updatedAt = new Date();
+        return prepared;
+    }
+
 }
 
 module.exports = {

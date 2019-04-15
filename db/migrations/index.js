@@ -65,20 +65,35 @@ const podcasts = driver.schema.createTable('podcasts', function (table) {
     table.unique(['guid', 'showId']);
 });
 
+const users = driver.schema.createTable('users', function (table) {
+    table.increments();
+    table.string('username').notNullable();
+    table.string('email').notNullable();
+    table.string('password');
+    table.string('profilePic');
+    table.timestamp('createdAt').defaultTo(driver.fn.now());
+    table.timestamp('updatedAt').defaultTo(driver.fn.now());
+    table.index('username');
+    table.unique('username');
+    table.unique('email');
+});
 
 
 const dropPodcast = driver.schema.dropTableIfExists('podcasts');
 const dropShow = driver.schema.dropTableIfExists('shows');
+const dropUser = driver.schema.dropTableIfExists('users');
 
 module.exports = {
     migrations: async () => {
         try {
             await dropPodcast;
             await dropShow;
+            await dropUser;
             console.log('tables dropped');
 
             await shows;
             await podcasts;
+            await users;
             console.log('tables created');
         } catch (error) {
             console.error('error', error);
