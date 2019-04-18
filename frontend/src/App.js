@@ -6,8 +6,10 @@ class App extends Component {
     return (
       <div>
         <header>
+          Ascootami
         </header>
         <p>
+          ascootami
         </p>
       </div>
     );
