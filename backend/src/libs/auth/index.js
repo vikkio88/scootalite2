@@ -3,8 +3,8 @@ const dayjs = require('dayjs');
 const { db } = require('../../libs');
 const { userModel } = require('../../models/users');
 
-const SECRET = 'ciao';
-const TTL = 3600;
+const { JWT_SECRET, JWT_TTL } = process.env;
+
 const auth = {
     async check({ username, password }) {
         const userRepo = userModel(db());
@@ -14,11 +14,11 @@ const auth = {
         return result;
     },
     encode(user) {
-        return jwt.encode({ user, expires: dayjs().unix() + TTL }, SECRET);
+        return jwt.encode({ user, expires: dayjs().unix() + JWT_TTL }, JWT_SECRET);
     },
     decode(token) {
         token = token.replace('Bearer ', '');
-        return jwt.decode(token, SECRET);
+        return jwt.decode(token, JWT_SECRET);
     }
 
 }
