@@ -8,9 +8,9 @@ class App extends Component {
         <header>
           Ascootami
         </header>
-        <p>
+        <section>
           ascootami
-        </p>
+        </section>
       </div>
     );
   }
