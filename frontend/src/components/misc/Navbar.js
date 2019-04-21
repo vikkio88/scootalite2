@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon } from '../common';
+import { Icon, Button } from '../common';
 
 import logo from '../../resources/images/main-logo.svg';
 
@@ -9,11 +9,9 @@ const Navbar = () => (
             <img src={logo} style={{ height: '50px' }} alt="scootalite logo" />
         </div>
         <div>
-            <a href="#stuff"
-                className="inline-block text-sm px-1 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal hover:bg-white mt-2 lg:mt-0 shadow"
-            >
+            <Button wrapper='a' onClick={() => console.log('clicked')}>
                 <Icon name="Rss" />
-            </a>
+            </Button>
         </div>
     </nav>
 );
