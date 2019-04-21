@@ -1,0 +1,5 @@
+svg {
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+    fill: none;
+}
