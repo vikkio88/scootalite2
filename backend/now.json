@@ -1,3 +1,13 @@
 {
-    "name": "scootalite-backend"
+    "name": "scootalite-backend",
+    "env": {
+        "DB_DRIVER": "@db_driver",
+        "DB_HOST": "@db_host",
+        "DB_PORT": "@db_port",
+        "DB_NAME": "@db_name",
+        "DB_USER": "@db_user",
+        "DB_PASSWORD": "@db_password",
+        "JWT_SECRET": "@jwt_secret",
+        "JWT_TTL": "@jwt_ttl"
+    }
 }
