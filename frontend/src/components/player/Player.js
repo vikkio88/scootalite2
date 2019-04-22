@@ -9,7 +9,7 @@ class Player extends Component {
             <div>
                 <div className="flex justify-center text-grey">
                     <Controls.Back disabled />
-                    <Controls.Play />
+                    <Controls.Play onClick={() => console.log('play')} />
                     <Controls.Forward disabled />
                 </div>
                 <Progress />
