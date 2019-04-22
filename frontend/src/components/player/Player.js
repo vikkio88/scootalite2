@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Button } from '../common';
+import { Controls } from './Controls';
 import { Progress } from './Progress';
 
 class Player extends Component {
@@ -8,7 +8,9 @@ class Player extends Component {
         return (
             <div>
                 <div className="flex justify-center text-grey">
-                    <Button icon='Play' size={{ width: 25, height: 25 }} onClick={() => console.log('play')} />
+                    <Controls.Back disabled />
+                    <Controls.Play />
+                    <Controls.Forward disabled />
                 </div>
                 <Progress />
             </div>
