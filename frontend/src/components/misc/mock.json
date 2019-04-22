@@ -380,21 +380,6 @@
             "categories": []
         },
         {
-            "id": 43,
-            "name": "Software Engineering Radio - The Podcast for Professional Software Developers",
-            "slug": "software-engineering-radio-the-podcast-for-professional-software-developers",
-            "description": "Software Engineering Radio is a podcast targeted at the professional software developer. The goal is to be a lasting educational resource, not a newscast. Every 10 days, a new episode is published that covers all topics software engineering. Episodes are either tutorials on a specific topic, or an interview with a well-known character from the software engineering world. All SE Radio episodes are original content \u2014 we do not record conferences or talks given in other venues. Each episode comprises two speakers to ensure a lively listening experience. SE Radio is an independent and non-commercial organization. All content is licensed under the Creative Commons 2.5 license.",
-            "author": "SE-Radio Team",
-            "explicit": false,
-            "website": "http:\/\/www.se-radio.net",
-            "feed_url": "https:\/\/feeds.feedburner.com\/se-radio",
-            "logo_url": "http:\/\/media.computer.org\/sponsored\/podcast\/se-radio\/se-radio-logo-1400x1475.jpg",
-            "valid_for": "12",
-            "updated_at": "2018-12-16 00:20:32",
-            "language": null,
-            "categories": []
-        },
-        {
             "id": 42,
             "name": "Dispenser",
             "slug": "dispenser",
