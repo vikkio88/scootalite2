@@ -9,8 +9,9 @@ const { response, unprocessable } = require('../../libs/formatters');
 const parse = async (req, res) => {
     const body = await json(req);
     try {
-        const showRepo = showsModel(db());
         const feed = stringCleaner.cleanUrl(body.feed);
+        
+        const showRepo = showsModel(db());
         const existingShow = await showRepo.getOneByFeedUrl(feed);
         if (existingShow && Show.isUpdated(existingShow)) {
             const show = await showRepo.getOneById(existingShow.id);
