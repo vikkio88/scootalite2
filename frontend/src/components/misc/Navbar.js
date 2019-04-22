@@ -14,9 +14,11 @@ const Navbar = () => {
                 </Link>
             </div>
             <div>
-                <Button tooltip={{ message: 'Feed Parser', pos: 'down' }}>
-                    <Icon name="Rss" />
-                </Button>
+                <Link to="/feed">
+                    <Button tooltip={{ message: 'Feed Parser', pos: 'down' }}>
+                        <Icon name="Rss" />
+                    </Button>
+                </Link>
                 <Link to="/about/" >
                     <Button tooltip={{ message: 'About', pos: 'down' }}>
                         <Icon name="Help" />
