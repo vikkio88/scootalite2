@@ -9,8 +9,14 @@ const Navbar = () => (
             <img src={logo} style={{ height: '50px' }} alt="scootalite logo" />
         </div>
         <div>
-            <Button wrapper='a' onClick={() => console.log('clicked')}>
+            <Button wrapper='a' onClick={() => console.log('clicked')} tooltip={{ message: 'Feed Parser', pos: 'down' }}>
                 <Icon name="Rss" />
+            </Button>
+            <Button wrapper='a' onClick={() => console.log('clicked')} tooltip={{ message: 'About', pos: 'down' }}>
+                <Icon name="Help" />
+            </Button>
+            <Button wrapper='a' onClick={() => console.log('clicked')} tooltip={{ message: 'Account', pos: 'left' }} >
+                <Icon name="Person" />
             </Button>
         </div>
     </nav>
