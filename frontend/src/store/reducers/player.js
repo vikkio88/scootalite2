@@ -1,4 +1,4 @@
-import {SELECT_PODCAST, PLAY, PAUSE, STOP} from '../actions';
+import { SELECT_PODCAST, PLAY, PAUSE, STOP } from '../actions';
 
 const initialState = {
     selectedPodcast: null,
@@ -9,7 +9,7 @@ const initialState = {
 export default function game(state = initialState, action = {}) {
     switch (action.type) {
         case PLAY:
-            const newState = {playing: true};
+            const newState = { playing: true };
             if (!state.originalTitle) {
                 newState.originalTitle = document.title;
             }
@@ -32,7 +32,7 @@ export default function game(state = initialState, action = {}) {
                 playing: false
             };
         case SELECT_PODCAST:
-            const {podcast, initialSeek} = action.data;
+            const { podcast, initialSeek } = action.data;
             return {
                 ...state,
                 selectedPodcast: podcast,

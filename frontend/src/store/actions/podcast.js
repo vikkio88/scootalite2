@@ -1,5 +1,5 @@
-import {services} from '../../libs/services';
-import {flashError} from './app';
+import { services } from '../../libs/services';
+import { flashError } from './app';
 
 export const SELECT_PODCAST = 'select_podcast';
 export const FETCH_TRENDS_SUCCESS = 'fetch_trends_success';
@@ -8,14 +8,14 @@ export const FETCH_SHOW_SUCCESS = 'fetch_show_success';
 export const selectPodcast = (podcast, initialSeek) => {
     return {
         type: SELECT_PODCAST,
-        data: {podcast, initialSeek}
+        data: { podcast, initialSeek }
     }
 };
 
 export const remoteFetchTrends = () => {
     return dispatch => {
         services.show.getAll()
-            .then(trendingShows => dispatch(fetchTrendsSuccess({trendingShows})));
+            .then(trendingShows => dispatch(fetchTrendsSuccess({ trendingShows })));
     }
 };
 
@@ -35,14 +35,14 @@ export const remoteFetchPodcast = (slug, initialSeek = null) => {
 export const remoteFetchShow = slug => {
     return dispatch => {
         services.show.getBySlug(slug)
-            .then(show => dispatch(fetchShowSuccess({show})));
+            .then(show => dispatch(fetchShowSuccess({ show })));
     }
 };
 
 export const remoteParseFeed = url => {
     return dispatch => {
         services.show.parse(url)
-            .then(show => dispatch(fetchShowSuccess({show})));
+            .then(show => dispatch(fetchShowSuccess({ show })));
     }
 };
 

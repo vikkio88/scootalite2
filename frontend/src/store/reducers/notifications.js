@@ -1,4 +1,4 @@
-import {NEW_INFO, NEW_ERROR, CLEAR_ERROR, CLEAR_INFO} from '../actions';
+import { NEW_INFO, NEW_ERROR, CLEAR_ERROR, CLEAR_INFO } from '../actions';
 
 const initialState = {
     info: null,

@@ -1,16 +1,13 @@
-import React, { Fragment } from 'react';
-import { Card } from '../common';
+import React from 'react';
+import { Route } from 'react-router-dom';
 
-import mock from './mock.json';
+import { TrendingShows, About } from '../views';
 
 const Body = () => (
     <div className="px-4 pt-4 flex-1 overflow-y-scroll">
         <div className="container mx-auto">
-            <Card.Grid>
-                <Fragment>
-                    {mock.payload.map(s => <Card key={s.id} title={s.name} subtitle={s.description} image={s.logo_url} />)}
-                </Fragment>
-            </Card.Grid>
+            <Route exact path="/" component={TrendingShows} />
+            <Route path="/about/" component={About} />
         </div>
     </div>
 );

@@ -1,4 +1,4 @@
-import {createStore, applyMiddleware, compose, combineReducers} from 'redux';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 
 import notifications from './reducers/notifications';
