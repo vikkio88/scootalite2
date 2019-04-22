@@ -61,6 +61,9 @@ const stringCleaner = {
         }
 
         return string.toLowerCase() === 'yes' ? true : false;
+    },
+    cleanUrl(url) {
+        return url.replace(/#.*$/, '').replace(/\?.*$/, '');
     }
 }
 
