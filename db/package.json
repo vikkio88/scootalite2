@@ -12,7 +12,7 @@
   "dependencies": {
     "command-line-args": "^5.1.1",
     "dotenv": "^7.0.0",
-    "knex": "^0.16.3",
+    "knex": "^0.19.5",
     "mysql": "^2.16.0",
     "sqlstring": "^2.3.1"
   }
